@@ -1,2 +1,4 @@
 # go_esri
-go library to query ESRI ArcGIS servers
+
+Go library to query ESRI ArcGIS servers/enterprise via it REST API.
+

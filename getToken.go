@@ -14,15 +14,15 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-// GetToken: Queries an ESRI server to obtain an authentication token, returns this token as a string
-// serverName can be in the form: "https://www.myserver.com/server/" or https://ags.myserver.com:6443/arcgis/
-func GetToken(username, password, serverName string) (string, error) {
+// JSON fields in response from getToken request
+type token struct {
+	Token   string `json:"token"`
+	Expires string `json:"expires"`
+}
 
-	// JSON fields in response from getToken request
-	type token struct {
-		Token   string `json:"token"`
-		Expires string `json:"expires"`
-	}
+// Queries an ESRI server to obtain an authentication token, returns this token as a string.
+// serverName can be in the form: https://www.myserver.com/server/ or https://ags.myserver.com:6443/arcgis/
+func GetToken(username, password, serverName string) (string, error) {
 
 	// ----------------------------------------- build and validate url
 	baseUrl, err := url.Parse(serverName)

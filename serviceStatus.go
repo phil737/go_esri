@@ -14,15 +14,15 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-// ServiceStatus: Returns string with service status, for root services folder should be empty. serviceFullName is the service name followed by its type.
-// example: SampleWorldCities.MapServer. serverName can be in the form: "https://www.myserver.com/server/" or https://ags.myserver.com:6443/arcgis/
-func ServiceStatus(token, serverName, folder, serviceFullName string) (string, error) {
+// JSON fields in response from getToken request
+type responseJSON struct {
+	RealTime  string `json:"realTimeState"`
+	ConfState string `json:"configuredState"`
+}
 
-	// JSON fields in response from getToken request
-	type responseJSON struct {
-		RealTime  string `json:"realTimeState"`
-		ConfState string `json:"configuredState"`
-	}
+// Returns string with service status, for root services folder should be empty. serviceFullName is the service name followed by its type.
+// example: "SampleWorldCities.MapServer", serverName can be in the form: https://www.myserver.com/server/ or https://ags.myserver.com:6443/arcgis/
+func ServiceStatus(token, serverName, folder, serviceFullName string) (string, error) {
 
 	// ----------------------------------------- build and validate url
 	baseUrl, err := url.Parse(serverName)
