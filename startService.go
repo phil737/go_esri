@@ -14,7 +14,6 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-// JSON fields in response from getToken request
 type startJSON struct {
 	Status string `json:"status"`
 }
@@ -51,7 +50,7 @@ func StartService(token, serverName, folder, serviceFullName string) error {
 	}
 
 	// ----------------------------------------- decode json response and return token
-	var obj stopJSON
+	var obj startJSON
 	err = json.Unmarshal(resp.Body(), &obj)
 	if err != nil {
 		return err

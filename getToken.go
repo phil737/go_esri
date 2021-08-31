@@ -21,7 +21,6 @@ type token struct {
 }
 
 // Queries an ESRI server to obtain an authentication token, returns this token as a string.
-// serverName can be in the form: https://www.myserver.com/server/ or https://ags.myserver.com:6443/arcgis/
 func GetToken(username, password, serverName string) (string, error) {
 
 	// ----------------------------------------- build and validate url
@@ -30,7 +29,7 @@ func GetToken(username, password, serverName string) (string, error) {
 		return "", err
 	}
 
-	baseUrl.Path += "admin/generateToken"
+	baseUrl.Path += "admin/generateToken" //	portal: sharing/rest/generateToken
 
 	// ----------------------------------------- build url encode string to be included in the header body
 	v := url.Values{}

@@ -14,7 +14,6 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-// JSON fields in response from getToken request
 type stopJSON struct {
 	Status string `json:"status"`
 }

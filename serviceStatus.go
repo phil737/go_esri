@@ -14,7 +14,6 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-// JSON fields in response from getToken request
 type responseJSON struct {
 	RealTime  string `json:"realTimeState"`
 	ConfState string `json:"configuredState"`

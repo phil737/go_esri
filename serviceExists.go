@@ -13,7 +13,6 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-// JSON fields in response from getToken request
 type existsJSON struct {
 	Exists bool `json:"exists"`
 }
