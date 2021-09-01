@@ -29,8 +29,8 @@ func ServiceStatus(token, serverName, folder, serviceFullName string) (string, e
 		return "", err
 	}
 
-	baseUrl.Path += "admin/services/"
-	baseUrl.Path += folder
+	baseUrl.Path += "/admin/services/"
+	baseUrl.Path += folder + "/"
 	baseUrl.Path += serviceFullName
 	baseUrl.Path += "/status"
 
@@ -42,10 +42,9 @@ func ServiceStatus(token, serverName, folder, serviceFullName string) (string, e
 	// ----------------------------------------- request the token
 	req := resty.New()
 
-	// to debug use: req.SetDebug(true).R().
 	resp, err := req.R().
 		SetHeader("Content-type", "application/x-www-form-urlencoded").
-		SetBody(string(v.Encode())). // convert url encoding to string first
+		SetBody(string(v.Encode())).
 		Post(baseUrl.String())
 
 	if err != nil {
@@ -59,7 +58,6 @@ func ServiceStatus(token, serverName, folder, serviceFullName string) (string, e
 		return "", err
 	}
 
-	// empty, something went wrong, return body which contains ESRI error message
 	if obj.RealTime == "" {
 		return "", errors.New(string(resp.Body()))
 	}

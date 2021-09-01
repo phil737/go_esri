@@ -1,41 +1,47 @@
 /*
 ESRI REST API implementation library.
 
-GetToken function.
+FolderServices function.
 */
 
 package go_esri
 
 import (
 	"encoding/json"
-	"errors"
 	"net/url"
 
 	"github.com/go-resty/resty/v2"
 )
 
-// JSON fields in response from getToken request
-type token struct {
-	Token   string `json:"token"`
-	Expires string `json:"expires"`
+// struct containing service information
+type ServicesJSON struct {
+	FolderName  string `json:"folderName"`
+	ServiceName string `json:"serviceName"`
+	Type        string `json:"type"`
+	Description string `json:"description"`
 }
 
-// Queries an ESRI server to obtain an authentication token, returns this token as a string.
-func GetToken(username, password, serverName string) (string, error) {
+type folderJSON struct {
+	FolderName  string         `json:"folderName"`
+	Description string         `json:"description"`
+	Services    []ServicesJSON `json:"services"`
+}
+
+// Returns struct list of services in given folder.
+func FolderServices(token, serverName, folder string) ([]ServicesJSON, error) {
 
 	// ----------------------------------------- build and validate url
 	baseUrl, err := url.Parse(serverName)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	baseUrl.Path += "/admin/generateToken" //	portal: sharing/rest/generateToken
+	baseUrl.Path += "/admin/services/"
+	baseUrl.Path += folder
 
 	// ----------------------------------------- build url encode string to be included in the header body
 	v := url.Values{}
-	v.Set("username", username)
-	v.Add("password", password)
-	v.Add("client", "requestip")
+	v.Set("token", token)
 	v.Add("f", "json")
 
 	// ----------------------------------------- request the token
@@ -48,19 +54,15 @@ func GetToken(username, password, serverName string) (string, error) {
 		Post(baseUrl.String())
 
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	// ----------------------------------------- decode json response and return token
-	var obj token
+	var obj folderJSON
 	err = json.Unmarshal(resp.Body(), &obj)
 	if err != nil {
-		return "", err
-	}
-	// empty token, something went wrong, return body which contains ESRI error message
-	if obj.Token == "" {
-		return "", errors.New(string(resp.Body()))
+		return nil, err
 	}
 
-	return obj.Token, nil
+	return obj.Services, nil
 }

@@ -26,7 +26,7 @@ func ServiceExists(token, serverName, folder, serviceName, serviceType string) (
 	if err != nil {
 		return false, err
 	}
-	baseUrl.Path += "admin/services/exists"
+	baseUrl.Path += "/admin/services/exists"
 
 	// ----------------------------------------- build url encode string to be included in the header body
 	v := url.Values{}
@@ -39,7 +39,6 @@ func ServiceExists(token, serverName, folder, serviceName, serviceType string) (
 	// ----------------------------------------- request the token
 	req := resty.New()
 
-	// to debug use: req.SetDebug(true).R().
 	resp, err := req.R().
 		SetHeader("Content-type", "application/x-www-form-urlencoded").
 		SetBody(string(v.Encode())). // convert url encoding to string first

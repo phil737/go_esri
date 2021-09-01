@@ -27,8 +27,8 @@ func StartService(token, serverName, folder, serviceFullName string) error {
 		return err
 	}
 
-	baseUrl.Path += "admin/services/"
-	baseUrl.Path += folder
+	baseUrl.Path += "/admin/services/"
+	baseUrl.Path += folder + "/"
 	baseUrl.Path += serviceFullName
 	baseUrl.Path += "/start"
 
@@ -42,7 +42,7 @@ func StartService(token, serverName, folder, serviceFullName string) error {
 
 	resp, err := req.R().
 		SetHeader("Content-type", "application/x-www-form-urlencoded").
-		SetBody(string(v.Encode())). // convert url encoding to string first
+		SetBody(string(v.Encode())).
 		Post(baseUrl.String())
 
 	if err != nil {
