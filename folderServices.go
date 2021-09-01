@@ -27,7 +27,7 @@ type folderJSON struct {
 	Services    []ServicesJSON `json:"services"`
 }
 
-// Returns struct list of services in given folder.
+// Returns struct list of services in given folder. For root folder string should be empty.
 func FolderServices(token, serverName, folder string) ([]ServicesJSON, error) {
 
 	// ----------------------------------------- build and validate url

@@ -18,7 +18,7 @@ type stopJSON struct {
 	Status string `json:"status"`
 }
 
-// Stops service, returns error or nil if success.
+// Stops service, returns error or nil if success. For root folder string should be empty.
 func StopService(token, serverName, folder, serviceFullName string) error {
 
 	// ----------------------------------------- build and validate url
