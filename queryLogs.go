@@ -51,7 +51,7 @@ func QueryLogs(token, serverName, levelType string, endT int64) (*logResponseJSO
 	v.Add("filter", "{\"server\": \"*\", \"services\": \"*\", \"machines\":\"*\" }")
 	v.Add("f", "json")
 
-	// ----------------------------------------- request the token
+	// ----------------------------------------- request
 	req := resty.New()
 
 	// to debug use: req.SetDebug(true).R().
@@ -64,7 +64,7 @@ func QueryLogs(token, serverName, levelType string, endT int64) (*logResponseJSO
 		return nil, err
 	}
 
-	// ----------------------------------------- decode json response and return token
+	// ----------------------------------------- decode json response
 	var obj logResponseJSON
 	err = json.Unmarshal(resp.Body(), &obj)
 	if err != nil {

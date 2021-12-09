@@ -44,7 +44,7 @@ func RootFolders(token, serverName string) ([]FoldersJSON, error) {
 	v.Add("f", "json")
 	v.Add("detail", "true")
 
-	// ----------------------------------------- request the token
+	// ----------------------------------------- request
 	req := resty.New()
 
 	// to debug use: req.SetDebug(true).R().
@@ -57,7 +57,7 @@ func RootFolders(token, serverName string) ([]FoldersJSON, error) {
 		return nil, err
 	}
 
-	// ----------------------------------------- decode json response and return token
+	// ----------------------------------------- decode json response
 	var obj rootItemsJSON
 	err = json.Unmarshal(resp.Body(), &obj)
 	if err != nil {

@@ -37,7 +37,7 @@ func StartService(token, serverName, folder, serviceFullName string) error {
 	v.Set("token", token)
 	v.Add("f", "json")
 
-	// ----------------------------------------- request the token
+	// ----------------------------------------- request
 	req := resty.New()
 
 	resp, err := req.R().
@@ -49,7 +49,7 @@ func StartService(token, serverName, folder, serviceFullName string) error {
 		return err
 	}
 
-	// ----------------------------------------- decode json response and return token
+	// ----------------------------------------- decode json response
 	var obj startJSON
 	err = json.Unmarshal(resp.Body(), &obj)
 	if err != nil {

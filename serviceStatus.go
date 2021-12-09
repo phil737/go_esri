@@ -39,7 +39,7 @@ func ServiceStatus(token, serverName, folder, serviceFullName string) (string, e
 	v.Set("token", token)
 	v.Add("f", "json")
 
-	// ----------------------------------------- request the token
+	// ----------------------------------------- request
 	req := resty.New()
 
 	resp, err := req.R().
@@ -51,7 +51,7 @@ func ServiceStatus(token, serverName, folder, serviceFullName string) (string, e
 		return "", err
 	}
 
-	// ----------------------------------------- decode json response and return token
+	// ----------------------------------------- decode json response
 	var obj responseJSON
 	err = json.Unmarshal(resp.Body(), &obj)
 	if err != nil {

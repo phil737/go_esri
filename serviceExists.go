@@ -36,7 +36,7 @@ func ServiceExists(token, serverName, folder, serviceName, serviceType string) (
 	v.Add("serviceName", serviceName)
 	v.Add("type", serviceType)
 
-	// ----------------------------------------- request the token
+	// ----------------------------------------- request
 	req := resty.New()
 
 	resp, err := req.R().
@@ -47,7 +47,7 @@ func ServiceExists(token, serverName, folder, serviceName, serviceType string) (
 		return false, err
 	}
 
-	// ----------------------------------------- decode json response and return token
+	// ----------------------------------------- decode json response
 	var obj existsJSON
 	err = json.Unmarshal(resp.Body(), &obj)
 	if err != nil {

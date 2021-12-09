@@ -44,7 +44,7 @@ func FolderServices(token, serverName, folder string) ([]ServicesJSON, error) {
 	v.Set("token", token)
 	v.Add("f", "json")
 
-	// ----------------------------------------- request the token
+	// ----------------------------------------- request
 	req := resty.New()
 
 	// to debug use: req.SetDebug(true).R().
@@ -57,7 +57,7 @@ func FolderServices(token, serverName, folder string) ([]ServicesJSON, error) {
 		return nil, err
 	}
 
-	// ----------------------------------------- decode json response and return token
+	// ----------------------------------------- decode json response
 	var obj folderJSON
 	err = json.Unmarshal(resp.Body(), &obj)
 	if err != nil {
