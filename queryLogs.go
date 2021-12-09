@@ -47,7 +47,7 @@ func QueryLogs(token, serverName, levelType string, endT int64) (*logResponseJSO
 	v.Add("endTime", fmt.Sprint(endT))
 	v.Add("level", levelType)
 	v.Add("filterType", "json")
-	v.Add("pageSize", "100")
+	v.Add("pageSize", "1000")
 	v.Add("filter", "{\"server\": \"*\", \"services\": \"*\", \"machines\":\"*\" }")
 	v.Add("f", "json")
 
