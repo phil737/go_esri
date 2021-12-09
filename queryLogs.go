@@ -16,20 +16,20 @@ import (
 type logMessageJSON struct {
 	Type    string `json:"type"`
 	Message string `json:"message"`
-	Time    string `json:"time"`
+	Time    int64  `json:"time"`
 	Source  string `json:"source"`
-	Code    string `json:"code"`
+	Code    int32  `json:"code"`
 }
 
 type logResponseJSON struct {
-	HasMore   string           `json:"hasMore"`
-	StartTime string           `json:"startTime"`
-	EndTime   string           `json:"endTime"`
-	Services  []logMessageJSON `json:"services"`
+	HasMore     bool             `json:"hasMore"`
+	StartTime   int64            `json:"startTime"`
+	EndTime     int64            `json:"endTime"`
+	LogMessages []logMessageJSON `json:"logMessages"`
 }
 
-// query ArcGIS server logs
-func QueryLogs(token, serverName string) (*logResponseJSON, error) {
+// query ArcGIS server logs, only records with a log level at or more severe than this (SEVERE, WARNING, INFO, FINE, VERBOSE, DEBUG).
+func QueryLogs(token, serverName, levelType string) (*logResponseJSON, error) {
 
 	// ----------------------------------------- build and validate url
 	baseUrl, err := url.Parse(serverName)
@@ -44,7 +44,7 @@ func QueryLogs(token, serverName string) (*logResponseJSON, error) {
 	v.Set("token", token)
 	v.Add("startTime", "") // 2021-12-07T00:55:23
 	v.Add("endTime", "")
-	v.Add("level", "SEVERE")
+	v.Add("level", levelType)
 	v.Add("filterType", "json")
 	v.Add("pageSize", "100")
 	v.Add("filter", "{\"server\": \"*\", \"services\": \"*\", \"machines\":\"*\" }")
