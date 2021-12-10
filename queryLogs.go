@@ -1,7 +1,8 @@
 /*
+query ArcGIS server logs.
 
-
- */
+10.12.2021 initial release
+*/
 
 package go_esri
 
@@ -29,7 +30,8 @@ type logResponseJSON struct {
 	LogMessages []logMessageJSON `json:"logMessages"`
 }
 
-// query ArcGIS server logs, only records with a log level at or more severe than this (SEVERE, WARNING, INFO, FINE, VERBOSE, DEBUG).
+// query ArcGIS server logs, returns records with a log levelType at or more severe than given (SEVERE, WARNING, INFO, FINE, VERBOSE, DEBUG).
+// returns logs younger than endT in milliseconds
 func QueryLogs(token, serverName, levelType string, endT int64) (*logResponseJSON, error) {
 
 	// ----------------------------------------- build and validate url
