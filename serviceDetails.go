@@ -14,16 +14,22 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
+type javaHeapSize struct {
+	ServiceHeapSize string `json:"javaHeapSize"`
+}
+
+// struct returned by services call, doc found in https://developers.arcgis.com/rest/enterprise-administration/server/service.htm
 type DetailsJSON struct {
-	ServiceType           string `json:"type"`
-	ServiceDescription    string `json:"description"`
-	ServiceCapabilities   string `json:"capabilities"`
-	ServiceClusterName    string `json:"clusterName"`
-	ServiceMinInstPerNode int32  `json:"minInstancesPerNode"`
-	ServiceMaxInstPerNode int32  `json:"maxInstancesPerNode"`
-	ServiceMaxWaitTime    int32  `json:"maxWaitTime"`
-	ServiceMaxIdelTime    int32  `json:"maxIdleTime"`
-	ServiceMaxUsageTime   int32  `json:"maxUsageTime"`
+	ServiceType           string       `json:"type"`
+	ServiceDescription    string       `json:"description"`
+	ServiceCapabilities   string       `json:"capabilities"`
+	ServiceClusterName    string       `json:"clusterName"`
+	ServiceMinInstPerNode int32        `json:"minInstancesPerNode"`
+	ServiceMaxInstPerNode int32        `json:"maxInstancesPerNode"`
+	ServiceMaxWaitTime    int32        `json:"maxWaitTime"`
+	ServiceMaxIdelTime    int32        `json:"maxIdleTime"`
+	ServiceMaxUsageTime   int32        `json:"maxUsageTime"`
+	ServiceProperties     javaHeapSize `json:"frameworkProperties"`
 }
 
 // Returns DetailsJSON struct with service info
