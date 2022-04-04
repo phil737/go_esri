@@ -1,38 +1,43 @@
 /*
 ESRI REST API implementation library.
 
-ServiceStatus function.
+ServiceDetails function.
+
 */
 
 package go_esri
 
 import (
 	"encoding/json"
-	"errors"
 	"net/url"
 
 	"github.com/go-resty/resty/v2"
 )
 
-type responseJSON struct {
-	RealTime  string `json:"realTimeState"`
-	ConfState string `json:"configuredState"`
+type DetailsJSON struct {
+	ServiceType           string `json:"type"`
+	ServiceDescription    string `json:"description"`
+	ServiceCapabilities   string `json:"capabilities"`
+	ServiceClusterName    string `json:"clusterName"`
+	ServiceMinInstPerNode int32  `json:"minInstancesPerNode"`
+	ServiceMaxInstPerNode int32  `json:"maxInstancesPerNode"`
+	ServiceMaxWaitTime    int32  `json:"maxWaitTime"`
+	ServiceMaxIdelTime    int32  `json:"maxIdleTime"`
+	ServiceMaxUsageTime   int32  `json:"maxUsageTime"`
 }
 
-// Returns string with service status, for root services folder should be empty. serviceFullName is the service name followed by its type.
-// example: "SampleWorldCities.MapServer", serverName can be in the form: https://www.myserver.com/server/ or https://ags.myserver.com:6443/arcgis/
-func ServiceStatus(token, serverName, folder, serviceFullName string) (string, error) {
+// Returns DetailsJSON struct with service info
+func ServiceDetails(token, serverName, folder, serviceFullName string) (*DetailsJSON, error) {
 
 	// ----------------------------------------- build and validate url
 	baseUrl, err := url.Parse(serverName)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	baseUrl.Path += "/admin/services/" // admin is part of root url
+	baseUrl.Path += "/admin/services/"
 	baseUrl.Path += folder + "/"
 	baseUrl.Path += serviceFullName
-	baseUrl.Path += "/status"
 
 	// ----------------------------------------- build url encode string to be included in the header body
 	v := url.Values{}
@@ -48,19 +53,15 @@ func ServiceStatus(token, serverName, folder, serviceFullName string) (string, e
 		Post(baseUrl.String())
 
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
 	// ----------------------------------------- decode json response
-	var obj responseJSON
+	var obj DetailsJSON
 	err = json.Unmarshal(resp.Body(), &obj)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
 
-	if obj.RealTime == "" {
-		return "", errors.New(string(resp.Body()))
-	}
-
-	return obj.RealTime, nil
+	return &obj, nil
 }
