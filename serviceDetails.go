@@ -29,6 +29,7 @@ type DetailsJSON struct {
 	ServiceMaxWaitTime    int32        `json:"maxWaitTime"`
 	ServiceMaxIdelTime    int32        `json:"maxIdleTime"`
 	ServiceMaxUsageTime   int32        `json:"maxUsageTime"`
+	ServiceProvider       string       `json:"provider"`
 	ServiceProperties     javaHeapSize `json:"frameworkProperties"`
 }
 
