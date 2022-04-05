@@ -3,6 +3,7 @@ ESRI REST API implementation library.
 
 ServiceDetails function.
 
+DetailsJSON and properties structs can be enriched with values found in doc at https://developers.arcgis.com/rest/enterprise-administration/server/service.htm
 */
 
 package go_esri
@@ -14,11 +15,20 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
+type sProperties struct {
+	MaxBufferCount  string `json:"maxBufferCount"`
+	VirtualCacheDir string `json:"virtualCacheDir"`
+	MaxImageHeight  string `json:"maxImageHeight"`
+	MaxRecordCount  string `json:"maxRecordCount"`
+	FilePath        string `json:"filePath"`
+	CacheOnDemand   string `json:"cacheOnDemand"`
+}
+
 type javaHeapSize struct {
 	ServiceHeapSize string `json:"javaHeapSize"`
 }
 
-// struct returned by services call, doc found in https://developers.arcgis.com/rest/enterprise-administration/server/service.htm
+// struct returned by services call
 type DetailsJSON struct {
 	ServiceType           string       `json:"type"`
 	ServiceDescription    string       `json:"description"`
@@ -29,8 +39,12 @@ type DetailsJSON struct {
 	ServiceMaxWaitTime    int32        `json:"maxWaitTime"`
 	ServiceMaxIdelTime    int32        `json:"maxIdleTime"`
 	ServiceMaxUsageTime   int32        `json:"maxUsageTime"`
+	RecycleInterval       int32        `json:"recycleInterval"`
 	ServiceProvider       string       `json:"provider"`
-	ServiceProperties     javaHeapSize `json:"frameworkProperties"`
+	LoadBalancing         string       `json:"loadBalancing"`
+	IsolationLevel        string       `json:"isolationLevel"`
+	ServiceProperties     sProperties  `json:"properties"`
+	ServiceFramework      javaHeapSize `json:"frameworkProperties"`
 }
 
 // Returns DetailsJSON struct with service info
