@@ -3,7 +3,10 @@ ESRI REST API implementation library.
 
 ServiceDetails function.
 
-DetailsJSON and properties structs can be enriched with values found in doc at https://developers.arcgis.com/rest/enterprise-administration/server/service.htm
+DetailsJSON and properties structs can be enriched with values found in server doc at
+https://developers.arcgis.com/rest/enterprise-administration/server/service.htm, when with Enterprise a more complete description can be found here:
+https://developers.arcgis.com/rest/enterprise-administration/enterprise/service.htm
+
 */
 
 package go_esri
@@ -16,12 +19,14 @@ import (
 )
 
 type sProperties struct {
-	MaxBufferCount  string `json:"maxBufferCount"`
-	VirtualCacheDir string `json:"virtualCacheDir"`
-	MaxImageHeight  string `json:"maxImageHeight"`
-	MaxRecordCount  string `json:"maxRecordCount"`
-	FilePath        string `json:"filePath"`
-	CacheOnDemand   string `json:"cacheOnDemand"`
+	PortalURL        string `json:"portalURL"`
+	VirtualOutputDir string `json:"virtualOutputDir"`
+	MaxImageHeight   string `json:"maxImageHeight"`
+	MaxRecordCount   string `json:"maxRecordCount"`
+	MaxScale         string `json:"maxScale"`
+	MinScale         string `json:"minScale"`
+	FilePath         string `json:"filePath"`
+	CacheOnDemand    string `json:"cacheOnDemand"`
 }
 
 type javaHeapSize struct {
@@ -29,26 +34,31 @@ type javaHeapSize struct {
 }
 
 // struct returned by services call
-type DetailsJSON struct {
-	ServiceType           string       `json:"type"`
-	ServiceDescription    string       `json:"description"`
-	ServiceCapabilities   string       `json:"capabilities"`
-	ServiceClusterName    string       `json:"clusterName"`
-	ServiceMinInstPerNode int32        `json:"minInstancesPerNode"`
-	ServiceMaxInstPerNode int32        `json:"maxInstancesPerNode"`
-	ServiceMaxWaitTime    int32        `json:"maxWaitTime"`
-	ServiceMaxIdelTime    int32        `json:"maxIdleTime"`
-	ServiceMaxUsageTime   int32        `json:"maxUsageTime"`
-	RecycleInterval       int32        `json:"recycleInterval"`
-	ServiceProvider       string       `json:"provider"`
-	LoadBalancing         string       `json:"loadBalancing"`
-	IsolationLevel        string       `json:"isolationLevel"`
-	ServiceProperties     sProperties  `json:"properties"`
-	ServiceFramework      javaHeapSize `json:"frameworkProperties"`
+type detailsJSON struct {
+	ServiceType                  string       `json:"type"`
+	ServiceDescription           string       `json:"description"`
+	ServiceCapabilities          string       `json:"capabilities"`
+	ServiceClusterName           string       `json:"clusterName"`
+	ServiceMinInstPerNode        int32        `json:"minInstancesPerNode"`
+	ServiceMaxInstPerNode        int32        `json:"maxInstancesPerNode"`
+	ServiceMaxWaitTime           int32        `json:"maxWaitTime"`
+	ServiceMaxIdelTime           int32        `json:"maxIdleTime"`
+	ServiceMaxUsageTime          int32        `json:"maxUsageTime"`
+	ServiceRecycleInterval       int32        `json:"recycleInterval"`
+	ServiceProvider              string       `json:"provider"`
+	ServiceLoadBalancing         string       `json:"loadBalancing"`
+	ServiceKeepAliveInterval     int32        `json:"keepAliveInterval"`
+	ServiceIsolationLevel        string       `json:"isolationLevel"`
+	ServicehasVersionedData      bool         `json:"hasVersionedData"`
+	ServiceInstancesPerContainer int32        `json:"instancesPerContainer"`
+	ServiceMaxUploadFileSize     int32        `json:"maxUploadFileSize"`
+	ServiceRecycleStartTime      string       `json:"recycleStartTime"`
+	ServiceProperties            sProperties  `json:"properties"`
+	ServiceFramework             javaHeapSize `json:"frameworkProperties"`
 }
 
 // Returns DetailsJSON struct with service info
-func ServiceDetails(token, serverName, folder, serviceFullName string) (*DetailsJSON, error) {
+func ServiceDetails(token, serverName, folder, serviceFullName string) (*detailsJSON, error) {
 
 	// ----------------------------------------- build and validate url
 	baseUrl, err := url.Parse(serverName)
@@ -78,7 +88,7 @@ func ServiceDetails(token, serverName, folder, serviceFullName string) (*Details
 	}
 
 	// ----------------------------------------- decode json response
-	var obj DetailsJSON
+	var obj detailsJSON
 	err = json.Unmarshal(resp.Body(), &obj)
 	if err != nil {
 		return nil, err
