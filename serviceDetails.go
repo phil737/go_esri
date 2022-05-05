@@ -33,28 +33,36 @@ type javaHeapSize struct {
 	ServiceHeapSize string `json:"javaHeapSize"`
 }
 
+type jsonProperties struct {
+	PropertiesType           string `json:"type"` // redundant with ServiceType ?
+	PropertiesStatus         string `json:"status"`
+	PropertiesName           string `json:"name"`
+	PropertiesAllowGeoUpdate bool   `json:"allowGeometryUpdates"`
+}
+
 // struct returned by services call
 type detailsJSON struct {
-	ServiceType                  string       `json:"type"`
-	ServiceDescription           string       `json:"description"`
-	ServiceCapabilities          string       `json:"capabilities"`
-	ServiceClusterName           string       `json:"clusterName"`
-	ServiceMinInstPerNode        int32        `json:"minInstancesPerNode"`
-	ServiceMaxInstPerNode        int32        `json:"maxInstancesPerNode"`
-	ServiceMaxWaitTime           int32        `json:"maxWaitTime"`
-	ServiceMaxIdelTime           int32        `json:"maxIdleTime"`
-	ServiceMaxUsageTime          int32        `json:"maxUsageTime"`
-	ServiceRecycleInterval       int32        `json:"recycleInterval"`
-	ServiceProvider              string       `json:"provider"`
-	ServiceLoadBalancing         string       `json:"loadBalancing"`
-	ServiceKeepAliveInterval     int32        `json:"keepAliveInterval"`
-	ServiceIsolationLevel        string       `json:"isolationLevel"`
-	ServicehasVersionedData      bool         `json:"hasVersionedData"`
-	ServiceInstancesPerContainer int32        `json:"instancesPerContainer"`
-	ServiceMaxUploadFileSize     int32        `json:"maxUploadFileSize"`
-	ServiceRecycleStartTime      string       `json:"recycleStartTime"`
-	ServiceProperties            sProperties  `json:"properties"`
-	ServiceFramework             javaHeapSize `json:"frameworkProperties"`
+	ServiceType                  string         `json:"type"`
+	ServiceDescription           string         `json:"description"`
+	ServiceCapabilities          string         `json:"capabilities"`
+	ServiceClusterName           string         `json:"clusterName"`
+	ServiceMinInstPerNode        int32          `json:"minInstancesPerNode"`
+	ServiceMaxInstPerNode        int32          `json:"maxInstancesPerNode"`
+	ServiceMaxWaitTime           int32          `json:"maxWaitTime"`
+	ServiceMaxIdelTime           int32          `json:"maxIdleTime"`
+	ServiceMaxUsageTime          int32          `json:"maxUsageTime"`
+	ServiceRecycleInterval       int32          `json:"recycleInterval"`
+	ServiceProvider              string         `json:"provider"`
+	ServiceLoadBalancing         string         `json:"loadBalancing"`
+	ServiceKeepAliveInterval     int32          `json:"keepAliveInterval"`
+	ServiceIsolationLevel        string         `json:"isolationLevel"`
+	ServicehasVersionedData      bool           `json:"hasVersionedData"`
+	ServiceInstancesPerContainer int32          `json:"instancesPerContainer"`
+	ServiceMaxUploadFileSize     int32          `json:"maxUploadFileSize"`
+	ServiceRecycleStartTime      string         `json:"recycleStartTime"`
+	ServiceProperties            sProperties    `json:"properties"`
+	ServiceJsonProperties        jsonProperties `json:"jsonProperties"`
+	ServiceFramework             javaHeapSize   `json:"frameworkProperties"`
 }
 
 // Returns DetailsJSON struct with service info

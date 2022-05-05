@@ -1,6 +1,8 @@
 /*
 ESRI REST API implementation library.
 
+https://developers.arcgis.com/rest/enterprise-administration/enterprise/service-status.htm
+
 ServiceStatus function.
 */
 
