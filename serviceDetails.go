@@ -34,7 +34,7 @@ type javaHeapSize struct {
 }
 
 type jsonProperties struct {
-	PropertiesType           string `json:"type"` // redundant with ServiceType ?
+	PropertiesType           string `json:"type"`
 	PropertiesStatus         string `json:"status"`
 	PropertiesName           string `json:"name"`
 	PropertiesAllowGeoUpdate bool   `json:"allowGeometryUpdates"`
@@ -46,20 +46,23 @@ type detailsJSON struct {
 	ServiceDescription           string         `json:"description"`
 	ServiceCapabilities          string         `json:"capabilities"`
 	ServiceClusterName           string         `json:"clusterName"`
+	ServiceConfiguredState       string         `json:"configuredState"`
 	ServiceMinInstPerNode        int32          `json:"minInstancesPerNode"`
 	ServiceMaxInstPerNode        int32          `json:"maxInstancesPerNode"`
 	ServiceMaxWaitTime           int32          `json:"maxWaitTime"`
 	ServiceMaxIdelTime           int32          `json:"maxIdleTime"`
 	ServiceMaxUsageTime          int32          `json:"maxUsageTime"`
 	ServiceRecycleInterval       int32          `json:"recycleInterval"`
+	ServiceRecycleStartTime      string         `json:"recycleStartTime"`
+	ServiceMaxViewsCount         int32          `json:"maxViewsCount"`
 	ServiceProvider              string         `json:"provider"`
 	ServiceLoadBalancing         string         `json:"loadBalancing"`
 	ServiceKeepAliveInterval     int32          `json:"keepAliveInterval"`
 	ServiceIsolationLevel        string         `json:"isolationLevel"`
 	ServicehasVersionedData      bool           `json:"hasVersionedData"`
+	ServiceSyncEnabled           bool           `json:"syncEnabled"`
 	ServiceInstancesPerContainer int32          `json:"instancesPerContainer"`
 	ServiceMaxUploadFileSize     int32          `json:"maxUploadFileSize"`
-	ServiceRecycleStartTime      string         `json:"recycleStartTime"`
 	ServiceProperties            sProperties    `json:"properties"`
 	ServiceJsonProperties        jsonProperties `json:"jsonProperties"`
 	ServiceFramework             javaHeapSize   `json:"frameworkProperties"`
