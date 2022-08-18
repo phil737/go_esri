@@ -31,8 +31,8 @@ type logResponseJSON struct {
 }
 
 // query ArcGIS server logs, returns records with a log levelType at or more severe than given (SEVERE, WARNING, INFO, FINE, VERBOSE, DEBUG).
-// returns logs younger than endT in milliseconds
-func QueryLogs(token, serverName, levelType string, endT int64) (*logResponseJSON, error) {
+// returns logs between startTime and endTime (values in milliseconds)
+func QueryLogs(token, serverName, levelType string, startTime, endTime int64) (*logResponseJSON, error) {
 
 	// ----------------------------------------- build and validate url
 	baseUrl, err := url.Parse(serverName)
@@ -45,8 +45,8 @@ func QueryLogs(token, serverName, levelType string, endT int64) (*logResponseJSO
 	// ----------------------------------------- build url encode string to be included in the header body
 	v := url.Values{}
 	v.Set("token", token)
-	v.Add("startTime", "") // 2021-12-07T00:55:23
-	v.Add("endTime", fmt.Sprint(endT))
+	v.Add("startTime", fmt.Sprint(startTime)) // 2021-12-07T00:55:23 or milliseconds
+	v.Add("endTime", fmt.Sprint(endTime))
 	v.Add("level", levelType)
 	v.Add("filterType", "json")
 	v.Add("pageSize", "1000")
