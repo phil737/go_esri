@@ -2,6 +2,7 @@
 query ArcGIS server logs.
 
 10.12.2021 initial release
+01.09.2023 added process, user, elapsed, thread, methodname and requestid (ProcID) in logMessageJSON struct
 */
 
 package go_esri
@@ -16,11 +17,17 @@ import (
 
 // struct containing service information
 type logMessageJSON struct {
-	Type    string `json:"type"`
-	Message string `json:"message"`
-	Time    int64  `json:"time"`
-	Source  string `json:"source"`
-	Code    int32  `json:"code"`
+	Type       string `json:"type"`
+	Message    string `json:"message"`
+	Time       int64  `json:"time"`
+	Source     string `json:"source"`
+	Code       int32  `json:"code"`
+	ProcessID  string `json:"process"`
+	UserName   string `json:"user"`
+	Elapsed    string `json:"elapsed"`
+	Thread     string `json:"thread"`
+	MethodName string `json:"methodName"`
+	RequestID  string `json:"requestID"`
 }
 
 type logResponseJSON struct {
