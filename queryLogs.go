@@ -1,6 +1,10 @@
 /*
 query ArcGIS server logs.
 
+
+https://developers.arcgis.com/rest/enterprise-administration/portal/query-logs.htm
+
+
 10.12.2021 initial release
 01.09.2023 added process, user, elapsed, thread, methodname and requestid (ProcID) in logMessageJSON struct
 */
