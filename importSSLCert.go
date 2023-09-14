@@ -1,3 +1,6 @@
+/*
+https://developers.arcgis.com/rest/enterprise-administration/server/importexistingservercertificate.htm
+*/
 package go_esri
 
 import (

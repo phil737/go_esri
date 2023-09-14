@@ -2,6 +2,12 @@
 ESRI REST API implementation library.
 
 GetToken function.
+
+reference:
+https://developers.arcgis.com/rest/services-reference/enterprise/generate-token.htm
+
+
+portal: https://geo.int.geomsf.org/portal/sharing/rest/generateToken
 */
 
 package go_esri
