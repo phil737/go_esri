@@ -34,7 +34,7 @@ type manifestJSON struct {
 }
 
 // Returns DetailsJSON struct with service info
-func ServiceManifest(token, serverName, folder, serviceFullName string) (*detailsJSON, error) {
+func ServiceManifest(token, serverName, folder, serviceFullName string) (*manifestJSON, error) {
 
 	// ----------------------------------------- build and validate url
 	baseUrl, err := url.Parse(serverName)
