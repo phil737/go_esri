@@ -30,7 +30,7 @@ type sdataBases struct {
 
 // struct returned by services call
 type manifestJSON struct {
-	DataBases sdataBases `json:"databases"`
+	DataBases []sdataBases `json:"databases"`
 }
 
 // Returns DetailsJSON struct with service info
@@ -45,7 +45,7 @@ func ServiceManifest(token, serverName, folder, serviceFullName string) (*manife
 	baseUrl.Path += "/admin/services/"
 	baseUrl.Path += folder + "/"
 	baseUrl.Path += serviceFullName + "/"
-	baseUrl.Path += "manifest/manifest.json"
+	baseUrl.Path += "iteminfo/manifest/manifest.json"
 
 	// ----------------------------------------- build url encode string to be included in the header body
 	v := url.Values{}
